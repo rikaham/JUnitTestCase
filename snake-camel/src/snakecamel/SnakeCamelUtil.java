@@ -3,15 +3,27 @@ package snakecamel;
 public class SnakeCamelUtil {
 
 	public static String snakeToCamelcase(String snake_case) {
+		
+		//エラー文追加
+		if (snake_case.matches(".*[A-Z].*")) {
+			return "スネークケースには大文字は含まれてはいけません。";
+		}
+		
 		String[] words = snake_case.split("_");
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < words.length - 1; i++) {
+		for (int i = 0; i < words.length; i++) { //words.length - 1を変更
 			sb.append(capitalize(words[i]));
 		}
 		return new String(sb);
 	}
 	 
 	public static String camelToSnakecase(String camelcase) {
+		
+		//エラー文追加
+		if (!camelcase.matches(".*[A-Z].*")) {
+			return "キャメルケースに大文字を含めて下さい。";
+		}
+		
 		StringBuilder sb = new StringBuilder();
 		int j = 0;
 		for (int i = 0; i < camelcase.length(); i++) {
@@ -22,7 +34,7 @@ public class SnakeCamelUtil {
 					sb.append("_");
 				}
 				sb.append(Character.toLowerCase(c));
-				j = i;
+				j = i + 1; //j = i;を変更
 			}
 		}
 		sb.append(camelcase.substring(j));
@@ -30,6 +42,7 @@ public class SnakeCamelUtil {
 	}
 	
 	static String capitalize(String s) {
+		if (s.length() == 0) return ""; //if文を追加
 		char first = s.charAt(0);
 		char upperFirst = Character.toUpperCase(first);
 		String rest = s.substring(1);
@@ -37,6 +50,7 @@ public class SnakeCamelUtil {
 	}
 
 	static String uncapitalize(String s) {
+		if (s.length() == 0) return ""; //if文を追加
 		char first = s.charAt(0);
 		char lowerFirst = Character.toLowerCase(first);
 		String rest = s.substring(1);
